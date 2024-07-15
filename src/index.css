@@ -1,0 +1,35 @@
+.myCard {
+    background-color: beige;
+}
+img {
+    width: 100px;
+}
+li {
+    list-style: none;
+}
+.container {
+    margin: 40px 0;
+}
+.shipping,.total {
+    margin: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+.shipping > div:nth-child(2) {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    padding-right: 90px;
+}
+.total {
+    margin: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+.total > div:nth-child(2) {
+    display: flex;
+    /* background-color:  green; */
+    flex-direction: column;
+    align-items: flex-end;
+    padding-right: 90px;
+}
