@@ -33,3 +33,20 @@ li {
     align-items: flex-end;
     padding-right: 90px;
 }
+input {
+    width: 40px;
+}
+.card-container {
+    padding: 20px;
+    border-bottom: 1px solid gray;
+  }
+  
+  .card-body h3 {
+    color: #28a745;
+  }
+  
+  .card img {
+    max-height: 200px;
+    object-fit: cover;
+  }
+  
