@@ -1,19 +1,25 @@
 import React, { useContext, useState, useEffect } from "react";
 import { myContext } from "../App";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStar } from '@fortawesome/free-solid-svg-icons';
 
 function Card() {
-  const [data, setData] = useContext(myContext);
+  const {data, setData,totalPrice,setTotalPrice} = useContext(myContext);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [addQuantity, setAddQuantity] = useState(1);
-  const [totalPrice, setTotalPrice] = useState(data[0].price);
-const [removeCard,setRemoveCard] = useState(data[0].id)
-console.log(removeCard);
+  // const [totalPrice, setTotalPrice] = useState(data[0].price);
+  const [removeCard, setRemoveCard] = useState(data[0].id);
+const [rating,setRating] = useState()
+
+  console.log(removeCard);
   const currentItem = data[currentIndex];
   const maxQuantity = currentItem.rating.count;
+ 
+
 
   useEffect(() => {
     setTotalPrice(currentItem.price * addQuantity); // updating phase
-  }, [currentItem,addQuantity]); // unmounting phase
+  }, [currentItem, addQuantity]); // unmounting phase
 
   const handleNext = () => {
     setCurrentIndex((prevIndex) => {
@@ -83,17 +89,34 @@ console.log(removeCard);
   };
 
   return (
-    <div className="card-container ">
+    <div className="card-container">
     <div className="row g-0">
-      <div className="col-md-3">
-        <img src={currentItem.image} className="img-fluid rounded-start" alt={currentItem.title} />
+      {/* Image column */}
+      <div className="col-md-3 imgStyle">
+        <img
+          src={currentItem.image}
+          className="img-fluid rounded-start"
+          alt={currentItem.title}
+        />
       </div>
+      {/* Text and quantity column */}
       <div className="col-md-5">
         <div className="card-body">
           <h5 className="card-title">{currentItem.title}</h5>
-          <p className="card-text"><strong>Category: </strong>{currentItem.category}</p>
-          <p className="card-text">{currentItem.description}</p>
-          <div className="d-flex align-items-center">
+          <p className="card-text mb-3">
+            <strong>Category:</strong> {currentItem.category}
+          </p>
+          <p className="card-text mb-3">{currentItem.description}</p>
+          <div className="mb-3">
+              {[...Array(5)].map((_, index) => (
+                <FontAwesomeIcon
+                  key={index}
+                  icon={faStar}
+                  className={index < currentItem.rating.rate ? 'text-warning' : 'text-secondary'}
+                />
+              ))}
+            </div>
+          <div className="d-flex align-items-center mb-3">
             <input
               type="number"
               value={addQuantity}
@@ -103,17 +126,32 @@ console.log(removeCard);
               className="form-control me-2"
               style={{ width: "70px" }}
             />
-            <span>Quantity</span>
+            <span className="fw-bold">Quantity</span>
           </div>
-          <div className="mt-3">
-            <button className="btn btn-primary me-2" onClick={handlePrev}>Previous</button>
-            <button className="btn btn-primary" onClick={handleNext}>Next</button>
+          <div>
+            <button
+              className="btn btn-primary me-2"
+              onClick={handlePrev}
+              disabled={data.length <= 1}
+            >
+              Previous
+            </button>
+            <button
+              className="btn btn-primary"
+              onClick={handleNext}
+              disabled={data.length <= 1}
+            >
+              Next
+            </button>
           </div>
         </div>
       </div>
-      <div className="col-md-4 d-flex flex-column align-items-center justify-content-center">
-        <h3>${totalPrice.toFixed(2)}</h3>
-        <button className="btn btn-danger mt-2" onClick={removeItem}>Remove</button>
+      {/* Price and remove button column */}
+      <div className="col-md-4 remove">
+        <h3 className="mb-4 " style={{textAlign:'center',paddingLeft: '100px'}}>${totalPrice.toFixed(2)}</h3>
+        <button className="btn btn-danger" style={{marginBottom: '20px',marginLeft: '100px'}} onClick={removeItem}>
+          Remove
+        </button>
       </div>
     </div>
   </div>

@@ -145,11 +145,14 @@ function App() {
 
   const [data, setData] = useState(products);
 
-  console.log(data[1]);
+  // console.log(data[1]);
+  const [totalPrice, setTotalPrice] = useState(data.length > 0 ? data[0].price : 0);
+
+  console.log("app Totalprice :", totalPrice);
 
   return (
     <>
-      <myContext.Provider value={[data, setData]}>
+      <myContext.Provider value={{data, setData,totalPrice, setTotalPrice   }}>
         <div className="container">
           <div className="row  card">
             <div className="myCard">
