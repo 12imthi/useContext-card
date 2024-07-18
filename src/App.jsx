@@ -1,7 +1,7 @@
-import { createContext, useState } from "react";
-import Card from "./componends/Card";
-import Shipping from "./componends/Shipping";
-import Total from "./componends/Total";
+import { createContext, useState,useEffect } from "react";
+import Card from "./components/Card";
+import Shipping from "./components/Shipping";
+import Total from "./components/Total";
 
 export const myContext = createContext("");
 
@@ -144,15 +144,24 @@ function App() {
 
 
   const [data, setData] = useState(products);
+  const [cart,setCart] = useState([]);
 
   // console.log(data[1]);
   const [totalPrice, setTotalPrice] = useState(data.length > 0 ? data[0].price : 0);
+  // const [totalPrice, setTotalPrice] = useState(0);
 
   console.log("app Totalprice :", totalPrice);
 
+  useEffect(() => {
+    // Update total price whenever the cart changes
+    const newTotalPrice = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    setTotalPrice(newTotalPrice);
+  }, [cart, setTotalPrice]);
+
+  
   return (
     <>
-      <myContext.Provider value={{data, setData,totalPrice, setTotalPrice   }}>
+      <myContext.Provider value={{data, setData,totalPrice, setTotalPrice ,cart ,setCart   }}>
         <div className="container">
           <div className="row  card">
             <div className="myCard">

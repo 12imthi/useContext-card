@@ -63,5 +63,8 @@ input {
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
+    border-left: 1px solid gray;
   }
-  
+  .imgStyle {
+    border-right: 1px solid gray;
+  }
